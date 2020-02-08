@@ -1,13 +1,16 @@
-HEADERS = /usr/local/include
-SOURCES = src/Application.cpp
-CC = g++
-CFLAGS = -std=c++11
-LDFLAGS = -lglfw -lGLEW -framework OpenGL 
-EXECUTABLE = ./a.out
-RM = rm -rf
+CC=g++ 
+CFLAGS=-std=c++11
+LDFLAGS=-lglfw -lGLEW -framework OpenGL
+HEADERS=/usr/local/include
+SOURCES=src/Application.cpp
+OBJS=
+TARGET=app
 
-all: $(SOURCES) $(HEADERS)
-	$(CC) $(CFLAGS) -o $(EXECUTABLE) $(SOURCES) $(LDFLAGS)
+all: $(TARGET)
 
-clean: 
-	$(RM) *.o $(EXECUTABLE)
+$(TARGET): $(SOURCES) $(HEADERS) $(OBJS)
+	$(CC) $(CFLAGS) $(SOURCES) -o $@ $(LDFLAGS)
+
+clean:
+	rm -f *.o
+	rm -f $(TARGET)
