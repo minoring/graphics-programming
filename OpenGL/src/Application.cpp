@@ -33,7 +33,7 @@ static unsigned int CreateShader(const std::string vertexShader,
 {
   unsigned int program = glCreateProgram();
   unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-  unsigned int fs = CompileShader(GL_VERTEX_SHADER, fragmentShader);
+  unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
   glAttachShader(program, vs);
   glAttachShader(program, fs);
@@ -75,23 +75,27 @@ int main(void)
   glGenBuffers(1, &buffer);
   glBindBuffer(GL_ARRAY_BUFFER, buffer);
   glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
-                        (const void *)0);
-
-  std::string vertexShader = "#version 330\n"
-                             "layout(location = 0) in vec4 position;\n"
-                             "void main() {\n"
-                             "gl_Position = position;\n"
-                             "}\n";
-  std::string fragmentShader = "#version 330\n"
-                               "layout(location = 0) out vec4 color;\n"
-                               "void main() {\n"
-                               "color = vec4(1.0, 0.0, 0.0, 1.0);\n"
-                               "}\n";
+  std::string vertexShader = 
+  "#version 120\n"
+  "attribute vec4 position;\n"
+  "void main()"
+  "{"
+    "gl_Position = position;"
+  "}";
+  std::string fragmentShader = 
+  "#version 120\n"
+  "void main()"
+  "{"
+    "gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);"
+  "}";
 
   unsigned int shader = CreateShader(vertexShader, fragmentShader);
   glUseProgram(shader);
+
+  int positionLoc = glGetAttribLocation(shader, "position");
+  glEnableVertexAttribArray(positionLoc);
+  glVertexAttribPointer(positionLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
+                        (const void *)0);
 
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
