@@ -1,3 +1,16 @@
 .vscode/
 app
 .DS_Store
+
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.xcodeproj
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Debug/*
+Makefile
+Win32/*
+cmake_install.cmake
+x64/*
