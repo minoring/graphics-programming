@@ -4,10 +4,11 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
 
 #define ASSERT(x)                                                              \
   if (!(x))                                                                    \
-  __builtin_trap()
+  exit(EXIT_FAILURE)
 #define GLCall(x)                                                              \
   GLClearError();                                                              \
   x;                                                                           \
