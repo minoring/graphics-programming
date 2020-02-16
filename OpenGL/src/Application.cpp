@@ -5,30 +5,9 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
-
-#define ASSERT(x)                                                              \
-  if (!(x))                                                                    \
-  exit(EXIT_FAILURE)
-#define GLCall(x)                                                              \
-  GLClearError();                                                              \
-  x;                                                                           \
-  ASSERT(GLLogCall(#x, __FILE__, __LINE__))
-
-static void GLClearError()
-{
-  while (glGetError() != GL_NO_ERROR)
-    ;
-}
-
-static bool GLLogCall(const char *function, const char *file, int line)
-{
-  while (GLenum error = glGetError()) {
-    std::cout << "[OpenGL Error] (" << error << ")" << function << " " << file
-              << " " << line << std::endl;
-    return false;
-  }
-  return true;
-}
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 struct ShaderProgramSource {
   std::string VertexSource;
@@ -131,25 +110,16 @@ int main(void)
   float positions[] = {-0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f};
   unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
-  unsigned int buffer;
-  glGenBuffers(1, &buffer);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer);
-  glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions,
-               GL_STATIC_DRAW);
+  VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+  IndexBuffer ib(indices, 6);
 
-  unsigned int ibo;
-  glGenBuffers(1, &ibo);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices,
-               GL_STATIC_DRAW);
-
-  ShaderProgramSource source = ParseShader("src/res/shaders/Basic.shader");
+  ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
 
   unsigned int shader =
       CreateShader(source.VertexSource, source.FragmentSource);
   GLCall(glUseProgram(shader));
 
-  GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+  int location = glGetUniformLocation(shader, "u_Color");
   ASSERT(location != -1);
   
   int positionLoc = glGetAttribLocation(shader, "position");
@@ -165,6 +135,8 @@ int main(void)
     glClear(GL_COLOR_BUFFER_BIT);
 
     GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+    ib.Bind();
+
     GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
     if (r > 1.0f)
