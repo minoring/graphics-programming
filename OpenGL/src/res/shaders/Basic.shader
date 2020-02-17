@@ -1,7 +1,7 @@
 #shader vertex
-#version 120
+#version 410
 
-attribute vec4 position;
+layout(location = 0) in vec4 position;
 
 void main()
 {
@@ -9,11 +9,12 @@ void main()
 }
 
 #shader fragment
-#version 120
+#version 410
 
 uniform vec4 u_Color;
+layout(location = 0) out vec4 color;
 
 void main()
 {
-  gl_FragColor = u_Color;
+  color = u_Color;
 }

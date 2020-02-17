@@ -19,6 +19,13 @@ int main(void)
   if (!glfwInit())
     return -1;
 
+  // Define version and compatibility settings
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
   /* Create a windowed mode window and its OpenGL context */
   window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
   if (!window) {
@@ -27,7 +34,7 @@ int main(void)
   }
 
   /* Make the window's context current */
-  glfwMakeContextCurrent(window);
+  GLCall(glfwMakeContextCurrent(window));
 
   glfwSwapInterval(1);
 
@@ -40,18 +47,22 @@ int main(void)
   float positions[] = {-0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f};
   unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
-  VertexBuffer vb(positions, 4 * 2 * sizeof(float));
-  IndexBuffer ib(indices, 6);
+  unsigned int vao;
+  GLCall(glGenVertexArrays(1, &vao));
+  GLCall(glBindVertexArray(vao));
 
+  VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+  vb.Bind();
+  IndexBuffer ib(indices, 6);
+  ib.Bind();
   Shader shader("res/shaders/Basic.shader");
   shader.Bind();
-  
-  shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
-  int positionLoc = glGetAttribLocation(shader.GetRendererID(), "position");
-  glEnableVertexAttribArray(positionLoc);
-  glVertexAttribPointer(positionLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
-                        (const void *)0);
 
+  GLCall(glEnableVertexAttribArray(0));
+  GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
+      (const void *)0));
+
+  GLCall(glBindVertexArray(0));
   shader.Unbind();
   vb.Unbind();
   ib.Unbind();
@@ -63,9 +74,9 @@ int main(void)
     /* Render here */
     glClear(GL_COLOR_BUFFER_BIT);
 
-    vb.Unbind();
     shader.Bind();
     shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+    GLCall(glBindVertexArray(vao));
     ib.Bind();
 
     GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
@@ -74,7 +85,7 @@ int main(void)
       increment = -0.05f;
     else if (r < 0.0f)
       increment = 0.05;
-    
+
     r += increment;
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
@@ -82,8 +93,6 @@ int main(void)
     /* Poll for and process events */
     glfwPollEvents();
   }
-
-
   glfwTerminate();
   return 0;
 }
