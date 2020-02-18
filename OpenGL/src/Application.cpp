@@ -10,6 +10,8 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
+#include "VertexArray.h"
+// #include "VertexBufferLayout.h"
 
 int main(void)
 {
@@ -47,9 +49,9 @@ int main(void)
   float positions[] = {-0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f};
   unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
-  unsigned int vao;
-  GLCall(glGenVertexArrays(1, &vao));
-  GLCall(glBindVertexArray(vao));
+  // unsigned int vao;
+  // GLCall(glGenVertexArrays(1, &vao));
+  // GLCall(glBindVertexArray(vao));
 
   VertexBuffer vb(positions, 4 * 2 * sizeof(float));
   vb.Bind();
@@ -58,14 +60,20 @@ int main(void)
   Shader shader("res/shaders/Basic.shader");
   shader.Bind();
 
-  GLCall(glEnableVertexAttribArray(0));
-  GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
-      (const void *)0));
+  VertexArray va;
+  va.Bind();
+  VertexBufferLayout layout;
+  layout.Push<float>(2);
+  va.AddBuffer(vb, layout);
 
-  GLCall(glBindVertexArray(0));
+  // GLCall(glEnableVertexAttribArray(0));
+  // GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
+  //     (const void *)0));
+
+  // GLCall(glBindVertexArray(0));
   shader.Unbind();
-  vb.Unbind();
   ib.Unbind();
+  va.Unbind();
 
   float r = 0.0f;
   float increment = 0.05f;
@@ -76,8 +84,9 @@ int main(void)
 
     shader.Bind();
     shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-    GLCall(glBindVertexArray(vao));
+    // GLCall(glBindVertexArray(vao));
     ib.Bind();
+    va.Bind();
 
     GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
