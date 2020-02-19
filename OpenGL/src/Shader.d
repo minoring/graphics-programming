@@ -1,2 +1,0 @@
-Shader.o: Shader.cpp Shader.h Renderer.h /usr/local/include/GL/glew.h \
-  /usr/local/include/GLFW/glfw3.h
