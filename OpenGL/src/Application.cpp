@@ -33,7 +33,7 @@ int main(void)
   glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
   /* Create a windowed mode window and its OpenGL context */
-  window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+  window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
   if (!window) {
     glfwTerminate();
     return -1;
@@ -50,17 +50,21 @@ int main(void)
   std::cout << glGetString(GL_VERSION) << std::endl;
 
   float positions[] = {
-      -0.5f, -0.5f, 0.0f, 0.0f, // 0
-       0.5f, -0.5f, 1.0f, 0.0f, // 1
-       0.5f,  0.5f, 1.0f, 1.0f, // 2
-      -0.5f,  0.5f, 0.0f, 1.0f, // 3
+       100.f,  100.f, 0.0f, 0.0f, // 0
+       200.f,  100.f, 1.0f, 0.0f, // 1
+       200.f,  200.f, 1.0f, 1.0f, // 2
+       100.f,  200.f, 0.0f, 1.0f, // 3
   };
   unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
   GLCall(glEnable(GL_BLEND));
   GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-  glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+  glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.0f, 1.0f);
+  glm::vec4 vp(100.f, 100.f, 0.0f, 1.f);
+
+  glm::vec4 result = proj * vp;
+  std::cout << result.x << " " << result.y;
 
   VertexBuffer vb(positions, 4 * 4 * sizeof(float));
   vb.Bind();
