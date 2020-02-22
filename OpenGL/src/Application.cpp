@@ -61,10 +61,9 @@ int main(void)
   GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
   glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.0f, 1.0f);
-  glm::vec4 vp(100.f, 100.f, 0.0f, 1.f);
-
-  glm::vec4 result = proj * vp;
-  std::cout << result.x << " " << result.y;
+  glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.f, 0, 0));
+  glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.f, 200.f, 0));
+  glm::mat4 mvp = proj * view * model;
 
   VertexBuffer vb(positions, 4 * 4 * sizeof(float));
   vb.Bind();
@@ -100,7 +99,7 @@ int main(void)
 
     shader.Bind();
     shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-    shader.SetUniformMat4f("u_MVP", proj);
+    shader.SetUniformMat4f("u_MVP", mvp);
 
     renderer.Draw(va, ib, shader);
 
