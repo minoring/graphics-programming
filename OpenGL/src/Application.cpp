@@ -14,6 +14,9 @@
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 
+#include "vendor/glm/glm.hpp"
+#include "vendor/glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
   GLFWwindow *window;
@@ -57,6 +60,8 @@ int main(void)
   GLCall(glEnable(GL_BLEND));
   GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
+  glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+
   VertexBuffer vb(positions, 4 * 4 * sizeof(float));
   vb.Bind();
   IndexBuffer ib(indices, 6);
@@ -91,6 +96,7 @@ int main(void)
 
     shader.Bind();
     shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+    shader.SetUniformMat4f("u_MVP", proj);
 
     renderer.Draw(va, ib, shader);
 
