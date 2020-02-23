@@ -36,7 +36,8 @@ void Shader::SetUniform4f(const std::string& name,
 
 void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
 {
-  GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+  GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, 
+      GL_FALSE, &matrix[0][0]));
 }
 
 int Shader::GetUniformLocation(const std::string& name)
@@ -46,7 +47,10 @@ int Shader::GetUniformLocation(const std::string& name)
 
   int location = glGetUniformLocation(m_RendererID, name.c_str());
   if (location == -1)
-    std::cout << "Warning: uniform '" << name << "' does not exist!" << std::endl;
+    std::cout << "Warning: uniform '" 
+              << name 
+              << "' does not exist!" 
+              << std::endl;
   m_UniformLocationCache[name] = location;
 
   return location;
@@ -75,7 +79,6 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 
   return {ss[0].str(), ss[1].str()};
 }
-
 
 unsigned int Shader::CreateShader(const std::string& vertexShader,
                                   const std::string& fragmentShader)
