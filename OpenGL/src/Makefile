@@ -1,9 +1,9 @@
 CXX=g++
 CC=g++
-CXXFLAGS=-g -Wall -MMD -std=c++11
+CXXFLAGS=-g -Wall -MMD -std=c++14
 LDFLAGS=-lglfw -lGLEW -framework OpenGL
 SOURCES=Application.cpp
-OBJS=IndexBuffer.o VertexBuffer.o Renderer.o VertexArray.o Shader.o Texture.o vendor/stb_image/stb_image.o vendor/imgui/imgui_draw.o vendor/imgui/imgui_impl_glfw_gl3.o vendor/imgui/imgui.o vendor/imgui/imgui_demo.o tests/TestClearColor.o tests/Test.o
+OBJS=IndexBuffer.o VertexBuffer.o Renderer.o VertexArray.o Shader.o Texture.o vendor/stb_image/stb_image.o vendor/imgui/imgui_draw.o vendor/imgui/imgui_impl_glfw_gl3.o vendor/imgui/imgui.o vendor/imgui/imgui_demo.o tests/TestClearColor.o tests/Test.o tests/TestTexture2D.o
 TARGET=app
 
 all: $(TARGET)
@@ -36,6 +36,8 @@ imgui_demo.o: vendor/imgui/imgui_demo.cpp
 TestClearColor.o: tests/TestClearColor.cpp tests/Test.h tests/TestClearColor.h
 
 Test.o: tests/Test.cpp tests/Test.h
+
+TestTexture2D.o : tests/TestTexture2D.cpp tests/TestTexture2D.h
 
 clean:
 	rm -f *.o
