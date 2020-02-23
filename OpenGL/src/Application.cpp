@@ -19,6 +19,7 @@
 
 #include "vendor/imgui/imgui.h"
 #include "vendor/imgui/imgui_impl_glfw_gl3.h"
+#include "tests/TestClearColor.h"
 
 int main(void)
 {
@@ -100,42 +101,47 @@ int main(void)
 
   float r = 0.0f;
   float increment = 0.05f;
-  /* Loop until the user closes the window */
+
+  test::TestClearColor test;
+
   while (!glfwWindowShouldClose(window)) {
-    /* Render here */
     renderer.Clear();
 
+    test.OnUpdate(0);
+    test.OnRender();
+
     ImGui_ImplGlfwGL3_NewFrame();
+    test.OnImGuiRender();
 
-    {
-      shader.Bind();
-      glm::mat4 model = glm::translate(glm::mat4(1.0f), translation_a);
-      glm::mat4 mvp = proj * view * model;
-      shader.SetUniformMat4f("u_MVP", mvp);
-      renderer.Draw(va, ib, shader);
-    }
+    // {
+    //   shader.Bind();
+    //   glm::mat4 model = glm::translate(glm::mat4(1.0f), translation_a);
+    //   glm::mat4 mvp = proj * view * model;
+    //   shader.SetUniformMat4f("u_MVP", mvp);
+    //   renderer.Draw(va, ib, shader);
+    // }
 
-    {
-      shader.Bind();
-      glm::mat4 model = glm::translate(glm::mat4(1.0f), translation_b);
-      glm::mat4 mvp = proj * view * model;
-      shader.SetUniformMat4f("u_MVP", mvp);
-      renderer.Draw(va, ib, shader);
-    }
+    // {
+    //   shader.Bind();
+    //   glm::mat4 model = glm::translate(glm::mat4(1.0f), translation_b);
+    //   glm::mat4 mvp = proj * view * model;
+    //   shader.SetUniformMat4f("u_MVP", mvp);
+    //   renderer.Draw(va, ib, shader);
+    // }
 
-    if (r > 1.0f)
-      increment = -0.05f;
-    else if (r < 0.0f)
-      increment = 0.05;
+    // if (r > 1.0f)
+    //   increment = -0.05f;
+    // else if (r < 0.0f)
+    //   increment = 0.05;
 
-    r += increment;
+    // r += increment;
 
-    {
-      ImGui::SliderFloat3("Translation A", &translation_a.x, 0.0f, 960.0f);
-      ImGui::SliderFloat3("Translation B", &translation_b.x, 0.0f, 960.0f);
-      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 
-          1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    }
+    // {
+    //   ImGui::SliderFloat3("Translation A", &translation_a.x, 0.0f, 960.0f);
+    //   ImGui::SliderFloat3("Translation B", &translation_b.x, 0.0f, 960.0f);
+    //   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 
+    //       1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    // }
 
     ImGui::Render();
     ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
