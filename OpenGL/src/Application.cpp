@@ -17,6 +17,9 @@
 #include "vendor/glm/glm.hpp"
 #include "vendor/glm/gtc/matrix_transform.hpp"
 
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw_gl3.h"
+
 int main(void)
 {
   GLFWwindow *window;
@@ -62,8 +65,6 @@ int main(void)
 
   glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.0f, 1.0f);
   glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.f, 0, 0));
-  glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.f, 200.f, 0));
-  glm::mat4 mvp = proj * view * model;
 
   VertexBuffer vb(positions, 4 * 4 * sizeof(float));
   vb.Bind();
@@ -90,12 +91,23 @@ int main(void)
 
   Renderer renderer;
 
+  ImGui::CreateContext();
+  ImGui_ImplGlfwGL3_Init(window, true);
+  ImGui::StyleColorsDark();
+
+  glm::vec3 translation(200.f, 200.f, 0.0f);
+
   float r = 0.0f;
   float increment = 0.05f;
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
     /* Render here */
     renderer.Clear();
+
+    ImGui_ImplGlfwGL3_NewFrame();
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
+    glm::mat4 mvp = proj * view * model;
 
     shader.Bind();
     shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
@@ -109,6 +121,15 @@ int main(void)
       increment = 0.05;
 
     r += increment;
+
+    {
+      ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    }
+
+    ImGui::Render();
+    ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
 
