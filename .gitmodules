@@ -1,0 +1,3 @@
+[submodule "OpenGL/OpenGL"]
+	path = OpenGL/OpenGL
+	url = https://github.com/TheCherno/OpenGL.git
