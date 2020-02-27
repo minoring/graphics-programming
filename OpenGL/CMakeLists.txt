@@ -1,15 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
+set (CMAKE_CXX_STANDARD 14)
+
 project(OpenGL VERSION 0.1
                DESCRIPTION "OpenGL project"
                LANGUAGES C CXX)
 
-add_executable(app src/Application.cpp)
+add_subdirectory(src)
 
-target_include_directories(app PUBLIC Dependencies/GLEW/include
-                                      /usr/local/include)
-
-target_link_libraries(app ${CMAKE_SOURCE_DIR}/Dependencies/GLEW/lib/libGLEW.a)
-if(APPLE)
-  target_link_libraries(app glfw "-framework OpenGL")
-endif()
+# set_target_properties(app PROPERTIES LINKER_LANGUAGE CXX)

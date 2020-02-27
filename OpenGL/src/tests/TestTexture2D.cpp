@@ -1,17 +1,17 @@
 #include "TestTexture2D.h"
 #include "../vendor/imgui/imgui.h"
-#include "../Renderer.h"
+#include "Renderer.h"
 
-#include "../vendor/glm/glm.hpp"
-#include "../vendor/glm/gtc/matrix_transform.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
-#include "../vendor/glm/glm.hpp"
-#include "../vendor/glm/gtc/matrix_transform.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
-#include "../VertexBuffer.h"
-#include "../VertexBufferLayout.h"
-#include "../VertexArray.h"
-#include "../Renderer.h"
+#include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
+#include "VertexArray.h"
+#include "Renderer.h"
 
 namespace test {
 

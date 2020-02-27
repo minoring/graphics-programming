@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Test.h"
-#include "../Texture.h"
+#include "Texture.h"
 
 #include <memory>
 
