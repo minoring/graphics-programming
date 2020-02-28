@@ -8,6 +8,6 @@ add_library(tests STATIC
             TestClearColor.cpp 
             TestTexture2D.cpp)
 
-target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR}/include/
-                                        ${CMAKE_SOURCE_DIR}/Dependencies/GLEW/include/
+target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR}/include
+                                        ${CMAKE_SOURCE_DIR}/Dependencies/GLEW/include
                                         ${CMAKE_SOURCE_DIR}/Dependencies/GLFW/include)

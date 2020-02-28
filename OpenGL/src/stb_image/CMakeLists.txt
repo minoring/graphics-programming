@@ -8,4 +8,4 @@ add_library(
     stb_image.cpp
 )
 
-target_include_directories(stb_image PUBLIC stb_image.h)
+target_include_directories(stb_image PRIVATE ${CMAKE_SOURCE_DIR}/include/stb_image)

@@ -1,5 +1,5 @@
 #include "Test.h"
-#include "../vendor/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 namespace test {
 

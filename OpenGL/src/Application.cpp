@@ -17,11 +17,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "vendor/imgui/imgui.h"
-#include "vendor/imgui/imgui_impl_glfw_gl3.h"
-#include "tests/Test.h"
-#include "tests/TestClearColor.h"
-#include "tests/TestTexture2D.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
+#include "Test.h"
+#include "TestClearColor.h"
+#include "TestTexture2D.h"
 
 int main(void)
 {

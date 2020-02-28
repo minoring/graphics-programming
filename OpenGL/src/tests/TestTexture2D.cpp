@@ -1,5 +1,5 @@
 #include "TestTexture2D.h"
-#include "../vendor/imgui/imgui.h"
+#include "imgui/imgui.h"
 #include "Renderer.h"
 
 #include "glm/glm.hpp"
