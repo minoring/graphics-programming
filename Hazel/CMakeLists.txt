@@ -4,5 +4,7 @@ project(hazel-project LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
+include_directories(vendor/spdlog/include)
+
 add_subdirectory(Hazel)
 add_subdirectory(Sandbox)
