@@ -1,6 +1,6 @@
 #pragma once
 
-extern hazel::Application* hazel::CreateApplication();
+hazel::Application* hazel::CreateApplication();
 
 int main(int argc, char** argv) {
   auto app = hazel::CreateApplication();
