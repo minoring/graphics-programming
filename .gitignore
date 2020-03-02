@@ -3,3 +3,6 @@ app
 .DS_Store
 _builds
 builds/
+*.sln
+*.vcxproj
+*.vcxproj.filters
