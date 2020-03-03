@@ -7,4 +7,5 @@ add_library(hazel SHARED
             src/Log.cpp)
 
 target_include_directories(hazel PRIVATE
-                           ${CMAKE_CURRENT_SOURCE_DIR}/include)
+                           ${CMAKE_CURRENT_SOURCE_DIR}/include
+                           ${CMAKE_CURRENT_SOURCE_DIR}/Events)
