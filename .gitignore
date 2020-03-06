@@ -7,3 +7,4 @@ builds/
 *.vcxproj
 *.vcxproj.filters
 a.out
+*.o
