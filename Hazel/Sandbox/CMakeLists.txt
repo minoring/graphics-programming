@@ -8,4 +8,5 @@ add_executable(sandbox
 target_include_directories(sandbox PUBLIC ${CMAKE_SOURCE_DIR}/Hazel)
 
 target_link_libraries(sandbox PUBLIC
-                      hazel)
+                      hazel
+                      glfw)

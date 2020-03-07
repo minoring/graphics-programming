@@ -4,6 +4,14 @@ project(hazel-project LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+if(__APPLE__)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit")
+endif(__APPLE__)
+
 include_directories(Hazel/vendor/spdlog/include)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -18,5 +26,6 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/release)
 endif()
 
+add_subdirectory(vendor/glfw)
 add_subdirectory(Hazel)
 add_subdirectory(Sandbox)
