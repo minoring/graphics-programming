@@ -8,11 +8,12 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-if(__APPLE__)
+if(APPLE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit")
-endif(__APPLE__)
+endif(APPLE)
 
-include_directories(Hazel/vendor/spdlog/include)
+include_directories(Hazel/vendor/spdlog/include
+                    vendor/glfw/include)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -29,3 +30,5 @@ endif()
 add_subdirectory(vendor/glfw)
 add_subdirectory(Hazel)
 add_subdirectory(Sandbox)
+
+add_dependencies(hazel glfw)

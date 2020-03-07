@@ -29,7 +29,7 @@ void WindowsWindow::Init(const WindowProps& props) {
     int success = glfwInit();
     HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
 
-    s_GLFW_Initialized = true;
+    s_GLFWInitialized = true;
   }
 
   m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, 
