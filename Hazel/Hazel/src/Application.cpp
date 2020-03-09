@@ -1,9 +1,7 @@
-#include "Application.h"
-
-#include "ApplicationEvent.h"
-#include "Log.h"
-
 #include <GLFW/glfw3.h>
+
+#include "Application.h"
+#include "ApplicationEvent.h"
 
 namespace hazel {
 

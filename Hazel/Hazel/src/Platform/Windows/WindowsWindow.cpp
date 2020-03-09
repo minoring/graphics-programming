@@ -1,4 +1,6 @@
 #include "WindowsWindow.h"
+#include "Core.h"
+#include "hzpch.h"
 
 namespace hazel {
 
